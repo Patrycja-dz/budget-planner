@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Budget_Planner</title>
+</head>
+
+<body>
+    <header class="header">
+        <h1>Budgett</h1>
+        <div class="header__logo"></div>
+    </header>
+    <main class="forms__container">
+        <form class="income-form" name="form">
+            <label>Przychody
+                <input type="text" class="income-input input" placeholder="nazwa" name="form-field">
+                <input type="number" class="income-amount input" placeholder="wartość" name="form-field">
+            </label>
+            <button class="income-button" type="submit" name="submit-btn">
+                <i class="fas fa-plus-square"></i>
+            </button>
+
+            <div class="incomes-container">
+                <ul class="incomes-list">
+
+                </ul>
+              
+            </div>
+            <p class="incomes-total"></p>
+        </form>
+        <form name="form">
+            <label>Wydatki
+                <input type="text" class="expense-input input" placeholder="nazwa" name="form-field">
+                <input type="number" class="expense-amount input" placeholder="wartość" name="form-field">
+            </label>
+            <button class="expense-button" type="submit" name="submit-btn">
+                <i class="fas fa-plus-square"></i>
+            </button>
+
+            <div class="expense-container">
+                <ul class="expense-list list">
+
+                </ul>
+              
+            </div>
+            <p class="expense-total"></p>
+        </form>
+        <h2 class="balance"></h2>
+    </main>
+    <script src="app.js"></script>
+</body>
+
+</html>
