@@ -101,3 +101,7 @@ min-width: 40%
 .trash-btn{
 background-color: #2a1d3f;
 }
+.fa-trash,
+.fa-pen-to-square{
+    pointer-events: none;
+}

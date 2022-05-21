@@ -41,12 +41,14 @@ for (let i = 0; i < submitButtons.length; i++) {
 
 incomeButton.addEventListener('click', addIncome);
 expenseButton.addEventListener('click', addExpense);
-incomeList.addEventListener('click', removeIncome);
-expenseList.addEventListener('click', removeExpense)
+incomeList.addEventListener('click', removeOrEditIncome);
+expenseList.addEventListener('click', removeOrEditExpense)
 
 // //functions
 function formHandler(event) {
+    console.log(event)
     event.preventDefault();
+  
 }
 
 function addIncome() {
@@ -64,12 +66,16 @@ function addIncome() {
     //edit button 
     const editButton = ce('button');
     editButton.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`
-    editButton.classList.add('edit-btn');
+    editButton.classList.add('edit-btn')
+    editButton.setAttribute('type','button');
     incomeDiv.appendChild(editButton)
+
+//    editButton.addEventListener('click', removeOrEditIncome);
     //delete button 
     const deleteButton = ce('button');
     deleteButton.innerHTML = `<i class="fa-solid fa-trash"></i>`
     deleteButton.classList.add('trash-btn');
+    // deleteButton.addEventListener('click',removeIncome)
     incomeDiv.appendChild(deleteButton);
     //append to list 
     incomeList.appendChild(incomeDiv);
@@ -92,11 +98,13 @@ function addExpense() {
     const editButton = ce('button');
     editButton.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`
     editButton.classList.add('edit-btn');
+    editButton.setAttribute('type','button')
     expenseDiv.appendChild(editButton)
     //delete button 
     const deleteButton = ce('button');
     deleteButton.innerHTML = `<i class="fa-solid fa-trash"></i>`
     deleteButton.classList.add('trash-btn');
+    // deleteButton.addEventListener('click',removeExpense)
     expenseDiv.appendChild(deleteButton);
     //append to list 
     expenseList.appendChild(expenseDiv);
@@ -104,19 +112,31 @@ function addExpense() {
     expenseAmount.value = '';
 }
 //TODO naprawić błąd, zrobić jedną funkcje ale żeby elementy były niezależnie od sieie usuwane
-function removeIncome(e) {
+function removeOrEditIncome(e) {
+    // e.preventDefault()
     const item = e.target;
+    console.log(item)
     if (item.classList[0] === 'trash-btn') {
         const budgetItem = item.parentElement;
-        budgetItem.remove
+      
+  
+        //console.log(item.classList[0] )
+        budgetItem.remove()
+    } else if (item.classList[0] === "edit-btn") {
+ 
+        console.log("Edit")
     }
+
 }
 
-function removeExpense(e) {
+function removeOrEditExpense(e) {
+    // e.preventDefault()
     const item = e.target;
     if (item.classList[0] === 'trash-btn') {
         const budgetItem = item.parentElement;
-        budgetItem.remove
+        budgetItem.remove()
+    } else if (item.classList[0] === "edit-btn") {
+        console.log("Edit")
     }
 }
 
@@ -146,4 +166,8 @@ function balance(number1, number2) {
         balanceResult = number1 === number2
         balanceText.innerHTML = `Balans wynosi 0`
     }
+}
+
+function updateIncomes() {
+    console.log("click")
 }
