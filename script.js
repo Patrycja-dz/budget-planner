@@ -70,15 +70,17 @@ function addIncome() {
     editButton.setAttribute('type', 'button');
     incomeDiv.appendChild(editButton)
 
-    // editButton.addEventListener('click', edit);
+    // editButton.addEventListener('click', editIncome(incomeDiv));
+    //editIncome(incomeDiv)
     //delete button 
     const deleteButton = ce('button');
     deleteButton.innerHTML = `<i class="fa-solid fa-trash"></i>`
     deleteButton.classList.add('trash-btn');
-        deleteButton.addEventListener('click', removeIncome)
+    deleteButton.addEventListener('click', removeIncome)
     incomeDiv.appendChild(deleteButton);
     //append to list 
     incomeList.appendChild(incomeDiv);
+    editButton.addEventListener('click', editIncome(incomeDiv,editButton));
     //clear
     incomeInput.value = '';
     incomeAmount.value = ''
@@ -109,6 +111,7 @@ function addExpense() {
     expenseDiv.appendChild(deleteButton);
     //append to list 
     expenseList.appendChild(expenseDiv);
+
     expenseInput.value = '';
     expenseAmount.value = '';
 }
@@ -123,6 +126,7 @@ function removeIncome(e) {
     }
 }
 
+
 function removeExpense(e) {
     e.preventDefault()
     const item = e.target;
@@ -132,6 +136,77 @@ function removeExpense(e) {
         budgetItem.remove()
     }
 }
+
+function editIncome(e, element) {
+    // e.preventDefault()
+    // const div = e
+    // console.log(div);
+    // let li = e.childNodes[0];
+    // console.log(li)
+     const button = e.childNodes[1]
+    // console.log(button)
+if(element.textContent !== `<i class="fa-solid fa-pen-to-square"></i>` ){
+    let inputForUpdateIncome = ce('input');
+    inputForUpdateIncome = e.childNodes[0];
+       let li = ce('li');
+        li.textContent = inputForUpdateIncome.value
+        e.insertBefore(li, inputForUpdateIncome)
+        e.removeChild(inputForUpdateIncome)
+        button.textContent === "edit"
+ 
+//  li = e.childNodes[0];
+    // let inputForUpdateIncome = ce('input');
+    // console.log(li.textContent)
+    // inputForUpdateIncome.type = "text";
+    // inputForUpdateIncome.value = li.textContent;
+    // console.log(inputForUpdateIncome.value)
+    // li.appendChild(inputForUpdateIncome)
+    // e.insertBefore(inputForUpdateIncome, li)
+    // e.removeChild(li)
+    // button.textContent = "Zapisz";F
+}
+
+        // console.log("click click")
+        // let li = e.childNodes[0];
+        // let inputForUpdateIncome = ce('input');
+        // console.log(li.textContent)
+        // inputForUpdateIncome.type = "text";
+        // inputForUpdateIncome.value = li.textContent;
+        // console.log(inputForUpdateIncome.value)
+        // li.appendChild(inputForUpdateIncome)
+        // e.insertBefore(inputForUpdateIncome, li)
+        // e.removeChild(li)
+        // // button.textContent = "Zapisz";
+    }
+    // } else if (button.textContent === "Zapisz") {
+        // inputForUpdateIncome = e.childNodes[0];
+        // li = ce('li');
+        // li.textContent = inputForUpdateIncome.value
+        // e.insertBefore(li, inputForUpdateIncome)
+        // e.removeChild(inputForUpdateIncome)
+        // button.textContent === "edit"
+    // }
+
+
+
+// parent.addEventListener('click', e)
+//   const button = e.target
+// if (button.classList[0] === 'edit-btn') {
+//     const liValue = element.firstElementChild;
+//     const input = ce('input');
+//     //const amountInput = ce('input');
+//     input.type = "text";
+//     //amountInput.type = 'number';
+//     input.value = liValue.textContent;
+//     div.append(input)
+//     liValue.insertBefore(input, liValue)
+
+// }
+
+
+
+
+
 
 function results() {
     arrayForIncomes.push(+incomeAmount.value)
@@ -161,11 +236,3 @@ function balance(number1, number2) {
         balanceText.innerHTML = `Balans wynosi 0`
     }
 }
-
-// function edit(e) {
-//     e.preventDefault()
-//     console.log("click")
-//     let updateExpense = arrayForExpense.reduce((prev, curr) => prev - curr)
-//     const newIncomeInput = ce('input')
-//     incomeDiv.appendChild(newIncomeInput)
-// }
