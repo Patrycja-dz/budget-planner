@@ -58,6 +58,7 @@ function addIncome() {
     const newIncome = ce('li');
     newIncome.innerText = `${incomeInput.value} ${+incomeAmount.value}`;
     newIncome.classList.add('income-item');
+    newIncome.setAttribute('id', `${arrayForIncomes.length+1}`)
     incomeDiv.appendChild(newIncome);
     // arrayForIncomes.push(+incomeAmount.value)
     // console.log(arrayForIncomes)
@@ -79,6 +80,9 @@ function addIncome() {
     incomeDiv.appendChild(deleteButton);
     //append to list 
     incomeList.appendChild(incomeDiv);
+       
+    const list = document.querySelectorAll('.income');
+    console.log(list)
     //clear
     incomeInput.value = '';
     incomeAmount.value = ''
@@ -120,6 +124,12 @@ function removeIncome(e) {
     if (item.classList[0] === 'trash-btn') {
         const budgetItem = item.parentElement;
         budgetItem.remove()
+    
+    // const list = document.querySelectorAll(el);
+    // console.log(list)
+    // const arr = [];
+    // arr.push(list)
+    // console.log(arr)
     }
 }
 
@@ -128,7 +138,7 @@ function removeExpense(e) {
     const item = e.target;
     if (item.classList[0] === 'trash-btn') {
         const budgetItem = item.parentElement;
-        // console.log(budgetItem)
+        console.log(budgetItem)
         budgetItem.remove()
     }
 }
