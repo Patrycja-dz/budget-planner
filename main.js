@@ -1,4 +1,3 @@
-
 const qs = (selector) => document.querySelector(selector)
 const ce = (tag) => document.createElement(tag)
 
@@ -13,80 +12,72 @@ const incomeContainer = qs('.incomes-container');
 const incomeList = qs('.incomes-list');
 const incomesTotalDOM = qs('.incomes-total')
 
-let counter = 0;
 let balanceText = qs('.balance')
 
-//data variables for pushing values from incomes 
 let incomesTotal = 0;
-let incomes = []
+let arrayForIncomes = [{
+    id: 1,
+    name: 'wypłata',
+    amount: 2000
+}, {
+    id: 2,
+    name: 'korepetycje',
+    amount: 150
+}];
 
-//expense selectors 
-const expenseInput = qs('.expense-input');
-const expenseAmount = qs('.expense-amount');
-const expenseButton = qs('.expense-button');
-const expenseContainer = qs('.expense-container');
-const expenseList = qs('.expense-list');
-const expenseTotalDOM = qs('.expense-total')
-
-// data for pushing expenses 
 let expenseTotal = 0;
-let dataForExpense = {};
+let arrayForExpense = []
 
-for (let i = 0; i < submitButtons.length; i++) {
-    submitButtons[i].addEventListener("click", formHandler)
-    console.log("działa")
-} // petla po to żeby przciski + nie przeładowywały strony 
-
-function formHandler(event) {
-    console.log(event)
-    event.preventDefault();
-
-}
+//przychody
 
 const addIncome = () => {
-    let income = {
-        id: counter++,
-        title: incomeInput.value,
-        amount: incomeAmount.value
-    }
-    incomes.push(income);
-    console.log(incomes)
-    const incomeDiv = ce('div');
-    incomeDiv.classList.add('income')
-    const incomeItem = ce('li');
-    incomeItem.innerText = `${income.title} ${income.amount}`
-    incomeItem.classList.add('income-item');
-    const editBtn = ce('button');
-    editBtn.setAttribute('type', 'button')
-    editBtn.innerText = "Edit"
-    editBtn.classList.add('edit-btn');
-    incomeItem.appendChild(editBtn);
-    incomeDiv.appendChild(incomeItem)
-    incomeList.appendChild(incomeDiv);
+    incomeList.innerHTML = ""
+    arrayForIncomes.forEach(({
+        id,
+        name,
+        amount
+    }) => {
+        // console.log(id,name,amount)
+        const newIncome = ce('li');
+        const incomeName = ce('p');
+        incomeName.textContent = name;
 
-  //  editBtn.addEventListener('click', editIncome(editBtn,incomeDiv,income,incomeItem))
+        const incomeAmount = ce('span');
+        incomeAmount.textContent = `${amount} pln`;
+
+        const editButton = ce('button');
+        editButton.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`
+        editButton.classList.add('edit-btn');
+        editButton.setAttribute('type', 'button');
+
+        const deleteButton = ce('button');
+        deleteButton.innerHTML = `<i class="fa-solid fa-trash"></i>`
+        deleteButton.classList.add('trash-btn');
+        deleteButton.setAttribute('type', 'button');
+
+        newIncome.appendChild(incomeName);
+        newIncome.appendChild(incomeAmount);
+        newIncome.appendChild(editButton);
+        newIncome.appendChild(deleteButton);
+
+        deleteButton.addEventListener('click', () => {
+            removeIncome(id)
+        })
+
+        incomeList.appendChild(newIncome);
+
+    })
 }
-incomeButton.addEventListener('click', addIncome);
-// const editIncome = (button,parentEl,income,incomeItem) => {
-//     if (button.textContent === "Edit") {
-//        // let currentId = incomes.length;
-//         //  let updateElement = incomes.find(income => income.id === currentId)
-       
+const removeIncome = (id) => {
+    const updatedIncome = arrayForIncomes.filter((item) => item.id !== id);
+    arrayForIncomes = updatedIncome
+    addIncome()
+}
 
-//         //potrzebny mi rodzic do, którego wstawie li --- czyli mój incomeDiv (parentEL)
-//         // tworze sobie li, które przyjmnie wartosc z tworzoneg inputa 
-
-//         let incomeLI = ce('li');
-//         let input = ce('input');
-//         // potrzebna mi wartosc ktora wpisze do inputa, czyli wartosc z pierwszwgo obiekty który jest zamieszczony 
-//         let currentValue = incomes.find(income=> income.title[0]);
-//         incomeLI.innerHTML = currentValue
-//         input.value = incomeLI.textContent
-//         incomeLI.appendChild(input);
-//         parentEl.appendChild(incomeLI);
-//         parentEl.insertBefore(input,incomeLI);
-//         let oldIncome = incomeItem.textContent
-//         incomeLI.appendChild(oldIncome);
-//     }
-// }
-// incomeButton.addEventListener('click', addIncome);
+const sumIncomes = () => {
+    incomesTotal = arrayForIncomes.reduce((a, b) => a + b.amount, 0);
+    console.log(incomesTotal)
+    addIncome()
+}
+sumIncomes()
+addIncome()
