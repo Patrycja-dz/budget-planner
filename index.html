@@ -18,10 +18,10 @@
         <div class="header__logo"></div>
     </header>
     <main class="forms__container">
-        <form class="income-form" name="form">
+        <form id="addIncomeForm" name="form">
             <label>Przychody
-                <input type="text" class="income-input input" placeholder="nazwa" name="form-field">
-                <input type="number" class="income-amount input" placeholder="wartość" name="form-field">
+                <input type="text" class="income-input input" placeholder="nazwa"  name="name" value="test">
+                <input type="number" class="income-amount input" placeholder="wartość"  name="amount">
             </label>
             <button class="income-button" type="submit" name="submit-btn">
                 <i class="fas fa-plus-square"></i>
@@ -31,14 +31,14 @@
                 <ul class="incomes-list">
 
                 </ul>
-              
+
             </div>
             <p class="incomes-total"></p>
         </form>
         <form name="form">
             <label>Wydatki
-                <input type="text" class="expense-input input" placeholder="nazwa" name="form-field">
-                <input type="number" class="expense-amount input" placeholder="wartość" name="form-field">
+                <input type="text" class="expense-input input" placeholder="nazwa" name="name">
+                <input type="number" class="expense-amount input" placeholder="wartość" name="amount">
             </label>
             <button class="expense-button" type="submit" name="submit-btn">
                 <i class="fas fa-plus-square"></i>
@@ -48,12 +48,15 @@
                 <ul class="expense-list list">
 
                 </ul>
-              
+
             </div>
             <p class="expense-total"></p>
         </form>
         <h2 class="balance"></h2>
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"
+        integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="main.js"></script>
 </body>
 

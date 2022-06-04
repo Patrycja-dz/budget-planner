@@ -1,83 +1,91 @@
 const qs = (selector) => document.querySelector(selector)
 const ce = (tag) => document.createElement(tag)
+const qsAll = (selectors) => document.querySelectorAll(selectors)
+// //selectors 
+const submitButtons = qsAll('[name="submit-btn"]');
 
-//selectors 
-const submitButtons = document.querySelectorAll('[name="submit-btn"]')
+// incomes selectors
+const incomeContainer = qs(".incomes-container");
+const incomesTotalDOM = qs(".incomes-total");
+const addIncomeForm = qs("#addIncomeForm");
 
-// incomes selectors 
-const incomeInput = qs('.income-input');
-const incomeAmount = qs('.income-amount');
-const incomeButton = qs('.income-button');
-const incomeContainer = qs('.incomes-container');
-const incomeList = qs('.incomes-list');
-const incomesTotalDOM = qs('.incomes-total')
+const balanceText = qs(".balance");
 
-let balanceText = qs('.balance')
+const newId = () => uuid.v4();
 
-let incomesTotal = 0;
-let arrayForIncomes = [{
-    id: 1,
-    name: 'wypłata',
-    amount: 2000
-}, {
-    id: 2,
-    name: 'korepetycje',
-    amount: 150
-}];
+const incomesDOM = qs(".incomes-list");
+let incomes = [
+  {
+    id: newId(),
+    name: "wypłata",
+    amount: 2000,
+  },
+  {
+    id: newId(),
+    name: "korepetycje",
+    amount: 150,
+  },
+];
 
-let expenseTotal = 0;
-let arrayForExpense = []
+const expensesDOM = qs(".expenses-list");
+let expenses = [];
 
 //przychody
 
-const addIncome = () => {
-    incomeList.innerHTML = ""
-    arrayForIncomes.forEach(({
-        id,
-        name,
-        amount
-    }) => {
-        // console.log(id,name,amount)
-        const newIncome = ce('li');
-        const incomeName = ce('p');
-        incomeName.textContent = name;
+const renderIncomes = () => {
+  incomesDOM.innerHTML = "";
+  incomes.forEach(({ id, name, amount }) => {
+    const li = ce("li");
+    li.textContent = `${name} | ${amount} pln`;
 
-        const incomeAmount = ce('span');
-        incomeAmount.textContent = `${amount} pln`;
+    const editButton = ce("button");
+    editButton.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`;
+    editButton.classList.add("edit-btn");
+    editButton.setAttribute("type", "button");
 
-        const editButton = ce('button');
-        editButton.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`
-        editButton.classList.add('edit-btn');
-        editButton.setAttribute('type', 'button');
+    const deleteButton = ce("button");
+    deleteButton.innerHTML = `<i class="fa-solid fa-trash"></i>`;
+    deleteButton.classList.add("trash-btn");
+    deleteButton.setAttribute("type", "button");
 
-        const deleteButton = ce('button');
-        deleteButton.innerHTML = `<i class="fa-solid fa-trash"></i>`
-        deleteButton.classList.add('trash-btn');
-        deleteButton.setAttribute('type', 'button');
+    deleteButton.addEventListener("click", () => {
+      removeIncome(id);
+      sumIncomes();
+    });
 
-        newIncome.appendChild(incomeName);
-        newIncome.appendChild(incomeAmount);
-        newIncome.appendChild(editButton);
-        newIncome.appendChild(deleteButton);
-
-        deleteButton.addEventListener('click', () => {
-            removeIncome(id)
-        })
-
-        incomeList.appendChild(newIncome);
-
-    })
-}
+    li.appendChild(editButton);
+    li.appendChild(deleteButton);
+    incomesDOM.appendChild(li);
+  });
+};
 const removeIncome = (id) => {
-    const updatedIncome = arrayForIncomes.filter((item) => item.id !== id);
-    arrayForIncomes = updatedIncome
-    addIncome()
-}
+  incomes = incomes.filter((item) => item.id !== id);
+  renderIncomes();
+};
 
 const sumIncomes = () => {
-    incomesTotal = arrayForIncomes.reduce((a, b) => a + b.amount, 0);
-    console.log(incomesTotal)
-    addIncome()
-}
-sumIncomes()
-addIncome()
+  incomesTotalDOM.textContent = incomes.reduce(
+    (acc, { amount }) => acc + amount,
+    0
+  );
+};
+
+const addIncome = (e) => {
+  e.preventDefault();
+
+  const { name, amount } = e.currentTarget.elements;
+
+  const newIncome = {
+    id: newId(),
+    name: name.value,
+    amount: Number(amount.value),
+  };
+
+  incomes = [...incomes, newIncome];
+  renderIncomes();
+  sumIncomes();
+};
+addIncomeForm.addEventListener("submit", addIncome);
+
+sumIncomes();
+renderIncomes();
