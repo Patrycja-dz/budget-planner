@@ -34,15 +34,16 @@ let incomes = [{
 
 const expensesDOM = qs(".expenses-list");
 let expenses = [{
-  id: newId(),
-  name: "zakupy",
-  amount: 285,
-},
-{
-  id: newId(),
-  name: "kino",
-  amount: 79,
-}];
+    id: newId(),
+    name: "zakupy",
+    amount: 285,
+  },
+  {
+    id: newId(),
+    name: "kino",
+    amount: 79,
+  }
+];
 
 //przychody
 
@@ -68,12 +69,16 @@ const renderIncomes = () => {
       const inputAmount = ce('input');
 
       const confirmBtn = ce('button');
-      confirmBtn.textContent = "confirm"
+      confirmBtn.innerHTML = `<i class="fa-solid fa-check"></i>`
+      confirmBtn.classList.add('confirm-btn');
+      confirmBtn.setAttribute("type", "button");
+
 
 
       const rejectBtn = ce('button');
+      rejectBtn.classList.add('cancel-btn');
       rejectBtn.textContent = "cancel";
-
+      rejectBtn.setAttribute("type", "button");
 
       inputName.setAttribute('id', newId());
       inputAmount.setAttribute('id', newId());
@@ -127,12 +132,16 @@ const renderExpenses = () => {
       const inputAmount = ce('input');
 
       const confirmBtn = ce('button');
-      confirmBtn.textContent = "confirm"
+      confirmBtn.innerHTML = `<i class="fa-solid fa-check"></i>`
+      confirmBtn.classList.add('confirm-btn');
+      confirmBtn.setAttribute("type", "button");
+
 
 
       const rejectBtn = ce('button');
+      rejectBtn.classList.add('cancel-btn');
       rejectBtn.textContent = "cancel";
-
+      rejectBtn.setAttribute("type", "button");
 
       inputName.setAttribute('id', newId());
       inputAmount.setAttribute('id', newId());
@@ -171,8 +180,8 @@ const removeIncome = (id) => {
   renderIncomes();
 };
 
-const removeExpense = (id)=>{
-  expenses = expenses.filter((item)=> item.id !==id);
+const removeExpense = (id) => {
+  expenses = expenses.filter((item) => item.id !== id);
   renderExpenses()
 }
 
@@ -229,7 +238,7 @@ const addExpense = (e) => {
   };
 
   expenses = [...expenses, newExpense];
-  renderExpenses();
+
   sumExpenses();
 };
 addIncomeForm.addEventListener("submit", addIncome);
