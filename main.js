@@ -21,29 +21,29 @@ const newId = () => uuid.v4();
 
 const incomesDOM = qs(".incomes-list");
 
-let incomes = [{
-    id: newId(),
-    name: "wypłata",
-    amount: 2000,
-  },
-  {
-    id: newId(),
-    name: "korepetycje",
-    amount: 150,
-  },
+let incomes = [
+  //   id: newId(),
+  //   name: "wypłata",
+  //   amount: 2000,
+  // },
+  // {
+  //   id: newId(),
+  //   name: "korepetycje",
+  //   amount: 150,
+  // },
 ];
 
 const expensesDOM = qs(".expenses-list");
-let expenses = [{
-    id: newId(),
-    name: "zakupy",
-    amount: 285,
-  },
-  {
-    id: newId(),
-    name: "kino",
-    amount: 79,
-  }
+let expenses = [
+  //   id: newId(),
+  //   name: "zakupy",
+  //   amount: 285,
+  // },
+  // {
+  //   id: newId(),
+  //   name: "kino",
+  //   amount: 79,
+  // }
 ];
 
 //przychody
@@ -231,7 +231,7 @@ const calculateBalance = () =>{
     balanceText.textContent = `Balans wynosi ${balanceTotal.textContent}`
   }else if(incomesTotalDOM.textContent > expensesTotalDOM.textContent){
     balanceText.textContent = `Możesz wydać jeszcze ${balanceTotal.textContent}`
-  }else{
+  }else if(incomesTotalDOM.textContent < expensesTotalDOM.textContent){
     balanceText.textContent = `Jesteś na minusie ${balanceTotal.textContent}`
   }
   removeExpense()
