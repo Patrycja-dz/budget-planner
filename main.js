@@ -14,7 +14,8 @@ const expenseContainer = qs(".expenses-container");
 const expensesTotalDOM = qs(".expenses-total");
 const addExpenseForm = qs('#addExpenseForm')
 
-const balanceText = qs(".balance");
+let balanceText = qs('.balance-text');
+const balanceTotal = qs(".balance-total");
 
 const newId = () => uuid.v4();
 
@@ -80,6 +81,8 @@ const renderIncomes = () => {
       rejectBtn.textContent = "cancel";
       rejectBtn.setAttribute("type", "button");
 
+      rejectBtn.addEventListener("click", renderIncomes)
+
       inputName.setAttribute('id', newId());
       inputAmount.setAttribute('id', newId());
 
@@ -91,7 +94,15 @@ const renderIncomes = () => {
       li.appendChild(confirmBtn);
       li.appendChild(rejectBtn);
 
-      confirmBtn.addEventListener("click", confirm(nameId, amountId));
+      confirmBtn.addEventListener("click", () => {
+        li.textContent = `${inputName.value} | ${inputAmount.value} pln`;
+        let index = incomes.findIndex((i) => i.id === id);
+        incomes[index].name = inputName.value;
+        incomes[index].amount = Number(inputAmount.value);
+        sumIncomes()
+        renderIncomes()
+
+      });
     })
 
     const deleteButton = ce("button");
@@ -137,11 +148,22 @@ const renderExpenses = () => {
       confirmBtn.setAttribute("type", "button");
 
 
+      confirmBtn.addEventListener("click", () => {
+        li.textContent = `${inputName.value} | ${inputAmount.value} pln`;
+        let index = expenses.findIndex((i) => i.id === id);
+        expenses[index].name = inputName.value;
+        expenses[index].amount = Number(inputAmount.value);
+        sumExpenses()
+        renderExpenses()
+
+      });
 
       const rejectBtn = ce('button');
       rejectBtn.classList.add('cancel-btn');
       rejectBtn.textContent = "cancel";
       rejectBtn.setAttribute("type", "button");
+
+      rejectBtn.addEventListener("click", renderExpenses)
 
       inputName.setAttribute('id', newId());
       inputAmount.setAttribute('id', newId());
@@ -154,7 +176,7 @@ const renderExpenses = () => {
       li.appendChild(confirmBtn);
       li.appendChild(rejectBtn);
 
-      // confirmBtn.addEventListener("click", confirm(nameId, amountId));
+
     })
 
     const deleteButton = ce("button");
@@ -172,9 +194,7 @@ const renderExpenses = () => {
     expensesDOM.appendChild(li);
   });
 };
-// const confirm = (nameId, amountId) => {
 
-// }
 const removeIncome = (id) => {
   incomes = incomes.filter((item) => item.id !== id);
   renderIncomes();
@@ -192,6 +212,7 @@ const sumIncomes = () => {
     }) => acc + amount,
     0
   );
+calculateBalance()
 };
 
 const sumExpenses = () => {
@@ -201,8 +222,23 @@ const sumExpenses = () => {
     }) => acc + amount,
     0
   );
+calculateBalance()
 };
 
+const calculateBalance = () =>{
+  balanceTotal.textContent = incomesTotalDOM.textContent - expensesTotalDOM.textContent;
+  if(incomesTotalDOM.textContent === expensesTotalDOM.textContent){
+    balanceText.textContent = `Balans wynosi ${balanceTotal.textContent}`
+  }else if(incomesTotalDOM.textContent > expensesTotalDOM.textContent){
+    balanceText.textContent = `Możesz wydać jeszcze ${balanceTotal.textContent}`
+  }else{
+    balanceText.textContent = `Jesteś na minusie ${balanceTotal.textContent}`
+  }
+  removeExpense()
+  removeIncome()
+  renderExpenses()
+  renderIncomes()
+}
 
 const addIncome = (e) => {
   e.preventDefault();
